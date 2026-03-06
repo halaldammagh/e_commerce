@@ -1,0 +1,6 @@
+class EndPoints {
+  static const String baseUrl = 'https://ecommerce.routemisr.com/api/v1/';
+  static const String loginApi = 'auth/signin';
+  static const String registerApi = 'auth/signup';
+
+}
