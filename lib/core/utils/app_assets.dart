@@ -19,11 +19,11 @@ class AppAssets {
   static const String shoppingCartIcon = "assets/images/icons/shopping.png";
   static const String hideEyeIcon = "assets/images/icons/hide_eye.png";
   static const String eyeIcon = "assets/images/icons/Eye.png";
-  static const String plusIcon = "assets/images/icons/add_icon.png";
   static const String removeIcon = "assets/images/icons/remove_icon.png";
   static const String addToCartIcon = "assets/images/icons/add_to_cart_icon.png";
   static const String deleteIcon = "assets/images/icons/delete.png";
   static const String searchIcon = "assets/images/icons/search_icon.png";
+  static const String plusIcon = "assets/images/icons/icon _plus circle_.png";
 
   // Announcements Image
   static const String routeLogo = "assets/images/icons/rout_logo.png";

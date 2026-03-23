@@ -1,5 +1,7 @@
+import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DialogUtils {
   static void showLoading({
@@ -13,12 +15,13 @@ class DialogUtils {
         return AlertDialog(
           content: Row(
             children: [
-              CircularProgressIndicator(),
+              CircularProgressIndicator(color: AppColors.primaryColor,
+                padding: EdgeInsets.symmetric(horizontal: 10.w),),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   loadingMessage,
-                  style: AppStyles.medium18Header,
+                  style: AppStyles.medium18Primary,
                 ),
               ),
             ],
@@ -54,7 +57,7 @@ class DialogUtils {
           },
           child: Text(
             posActionName,
-            style:AppStyles.medium18Header,
+            style: AppStyles.medium18Primary,
           ),
         ),
       );
@@ -71,7 +74,7 @@ class DialogUtils {
           },
           child: Text(
             negActionName,
-            style: Theme.of(context).textTheme.titleMedium,
+              style: AppStyles.medium18Primary
           ),
         ),
       );
@@ -83,11 +86,11 @@ class DialogUtils {
         return AlertDialog(
           content: Text(
             message,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: AppStyles.medium15Primary,
           ),
           title: Text(
             title!,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: AppStyles.medium15Primary,
           ),
           actions: actions,
         );
