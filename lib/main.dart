@@ -6,7 +6,7 @@ import 'package:e_commerce/core/utils/app_theme.dart';
 import 'package:e_commerce/features/ui/auth/login/login_screen.dart';
 import 'package:e_commerce/features/ui/auth/register/register_screen.dart';
 import 'package:e_commerce/features/ui/pages/home_screens/home_screen/home_screen.dart';
-import 'package:e_commerce/features/ui/pages/home_screens/tabs/products_tab/product_route.dart';
+import 'package:e_commerce/features/ui/pages/product_details/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
            AppRoutes.registerRoute: (context) => RegisterScreen(),
             AppRoutes.homeRoute: (context) => HomeScreen(),
            // AppRoutes.cartRoute : (context)=> const
-            AppRoutes.productRoute: (context) => ProductRoute()
+            AppRoutes.productRoute: (context) => ProductDetailsScreen()
           },
           theme: AppTheme.lightTheme,
         );

@@ -67,6 +67,7 @@ class _ProductsTabState extends State<ProductsTab> {
                     },
                   ),
                 ),
+                SizedBox(height: 100),
               ],
             ),
           );

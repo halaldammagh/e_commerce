@@ -24,6 +24,7 @@ class AppAssets {
   static const String deleteIcon = "assets/images/icons/delete.png";
   static const String searchIcon = "assets/images/icons/search_icon.png";
   static const String plusIcon = "assets/images/icons/icon _plus circle_.png";
+  static const String addIcon = "assets/images/icons/add_icon.png";
 
   // Announcements Image
   static const String routeLogo = "assets/images/icons/rout_logo.png";

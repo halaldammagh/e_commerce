@@ -64,10 +64,26 @@ class AppStyles {
       fontWeight: FontWeight.w500,
       color: AppColors.primaryColor
   );
+  static TextStyle medium14PrimaryDark = GoogleFonts.poppins(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDark
+  );
+  static TextStyle medium14LightPrimary = GoogleFonts.poppins(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkLight
+  );
   static TextStyle medium18Header = GoogleFonts.poppins(
       fontSize: 18,
       fontWeight: FontWeight.w600,
       color: AppColors.primaryDark
+  );
+  static TextStyle medium18LightHeader = GoogleFonts.poppins(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkLight
+
   );
   static TextStyle label = GoogleFonts.poppins(
       fontSize: 10,
