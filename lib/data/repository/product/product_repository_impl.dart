@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: ProductRepository)
 class ProductRepositoryImpl implements ProductRepository {
   ProductRemoteDataSource _productRemoteDataSource;
-
   ProductRepositoryImpl(this._productRemoteDataSource);
 
   @override

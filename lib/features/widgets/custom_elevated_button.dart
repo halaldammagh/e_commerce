@@ -6,16 +6,15 @@ class CustomElevatedButton extends StatelessWidget {
   Color decorationColor;
   Color? borderSideColor;
   Widget child;
+  double height;
   void Function() onPressed;
   double borderRadius;
 
   CustomElevatedButton(
-      {super.key, required this.child, required this.decorationColor, this.borderSideColor, required this.onPressed, this.borderRadius = 15});
+      {super.key, required this.child, required this.decorationColor, this.borderSideColor, required this.onPressed, required this.borderRadius, this.height = 14 });
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             side: BorderSide(
@@ -24,7 +23,7 @@ class CustomElevatedButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius.r)),
             backgroundColor: decorationColor,
-            padding: EdgeInsets.symmetric(vertical: height*0.015)
+            padding: EdgeInsets.symmetric(vertical: height)
         ),
         onPressed:onPressed, child:child
     );

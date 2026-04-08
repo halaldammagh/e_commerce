@@ -60,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
               posActionName: 'ok',
               title: "Success",
               posAction: () {
+                //SharedPrefsUtils.saveData(key: 'token', value: state.authResponse.token??'');
                 Navigator.pushNamed(context, AppRoutes.homeRoute);
               }
           );
@@ -172,6 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 40.h, bottom: 3.h),
                         child: CustomElevatedButton(
+                            borderRadius: 15,
                             child: Padding(
                               padding: const EdgeInsets.all(3),
                               child: Text(

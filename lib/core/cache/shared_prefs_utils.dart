@@ -27,4 +27,9 @@ class SharedPrefsUtils {
   static Object? getData({required String key}) {
     return sharedPrefs.get(key);
   }
+
+  //todo: remove data
+  static Future<bool> removeData({required String key}) async {
+    return await sharedPrefs.remove(key);
+  }
 }

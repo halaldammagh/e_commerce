@@ -2,6 +2,7 @@ import 'package:e_commerce/api/api_services.dart';
 import 'package:e_commerce/api/mapper/auth/auth_response_mapper.dart';
 import 'package:e_commerce/api/mapper/auth/login_request_mapper.dart';
 import 'package:e_commerce/api/mapper/auth/register_request_mapper.dart';
+import 'package:e_commerce/core/cache/shared_prefs_utils.dart';
 import 'package:e_commerce/data/data_sources/remote/auth/auth_remote_data_source.dart';
 import 'package:e_commerce/domain/entities/request/login/login_request.dart';
 import 'package:e_commerce/domain/entities/request/register/register_request.dart';
@@ -20,6 +21,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     var authResponse = await _apiServices.login(
       loginRequest.toLoginRequestDto(),
     );
+    //todo: save token
+    SharedPrefsUtils.saveData(key: 'token', value: authResponse.token ?? "");
+
     //todo: AuthResponseDto => AuthResponse
     return authResponse.toAuthResponse();
   }
@@ -30,6 +34,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     var authResponse = await _apiServices.register(
       registerRequest.toRegisterRequestDto(),
     );
+    //todo: save token
+    SharedPrefsUtils.saveData(key: 'token', value: authResponse.token ?? "");
+
     //todo: AuthResponseDto => AuthResponse
     return authResponse.toAuthResponse();
   }

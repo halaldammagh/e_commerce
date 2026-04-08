@@ -3,8 +3,11 @@ import 'dart:ui';
 import 'package:e_commerce/core/di/di.dart';
 import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
+import 'package:e_commerce/core/utils/app_styles.dart';
+import 'package:e_commerce/features/ui/pages/%20cart_screen/cubit/cart_screen_view_model.dart';
 import 'package:e_commerce/features/ui/pages/home_screens/home_screen/cubit/home_screen_status.dart';
 import 'package:e_commerce/features/ui/pages/home_screens/home_screen/cubit/home_screen_view_model.dart';
+import 'package:e_commerce/features/widgets/custom_app_bar_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,11 +39,20 @@ class _HomeScreenState extends State<HomeScreen> {
   HomeScreenViewModel viewModel = getIt<HomeScreenViewModel>();
 
   @override
+  void initState() {
+    super.initState();
+    // ✅ استخدمي WidgetsBinding عشان تضمني إن الـ context جاهز
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CartScreenViewModel>().getItemsInCart();
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeScreenViewModel, HomeScreenStatus>(
       bloc: viewModel,
       builder: (context, state) {
         return Scaffold(
+          appBar: _buildAppBar(viewModel.selectedIndex),
           body: Stack(
             children: [
               /// الصفحة
@@ -114,6 +126,65 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBarItem(
       icon: Image.asset(isSelected ? selectedIcon : unSelectedIcon),
       label: '',
+    );
+  }
+
+  OutlineInputBorder _buildCustomBorder() {
+    return OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
+        borderRadius: BorderRadius.circular(50.r)
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(int index) {
+    return AppBar(
+      surfaceTintColor: AppColors.transParentColor,
+      elevation: 0,
+      toolbarHeight: index != 3 ? 120.h : kToolbarHeight,
+      leadingWidth: double.infinity,
+      leading: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: 10.h, right: 348.w),
+              child: Image.asset(AppAssets.appBarRouteLogo, width: 66.w,),
+            ),
+
+            Visibility(
+              visible: index != 3,
+              child: Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: TextField(
+                      style: AppStyles.regular14Text,
+                      cursorColor: AppColors.primaryColor,
+                      onTap: () {
+                        //todo: implement search logic
+                      },
+                      decoration: InputDecoration(
+                        border: _buildCustomBorder(),
+                        enabledBorder: _buildCustomBorder(),
+                        focusedBorder: _buildCustomBorder(),
+                        contentPadding: EdgeInsets.all(16.h),
+                        hintStyle: AppStyles.light14SearchHint,
+                        hintText: 'what do you search for?',
+                        prefixIcon: Image.asset(AppAssets.searchIcon),
+
+                      ),
+
+
+                    )),
+                    CustomAppBarBadge()
+                  ],
+                ),
+              ),
+            )
+
+          ],
+        ),
+      ),
     );
   }
 }

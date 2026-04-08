@@ -17,3 +17,4 @@ class ProductSuccessState extends ProductTabStatus {
 
   ProductSuccessState({required this.productList});
 }
+

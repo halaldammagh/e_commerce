@@ -16,3 +16,7 @@ class NetworkException extends AppExceptions {
 class UnexpectedException extends AppExceptions {
   UnexpectedException({required super.message, super.statusCode});
 }
+
+class UnAuthorizedException extends AppExceptions {
+  UnAuthorizedException({required super.message, super.statusCode});
+}

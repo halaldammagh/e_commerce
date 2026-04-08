@@ -23,6 +23,8 @@ class CustomTextFormField extends StatelessWidget {
   TextInputType? keyboardType;
   String obscuringCharacter;
   bool obscureText;
+  double verticalPadding;
+  double horizontalPadding;
   CustomTextFormField({
     super.key,
     this.hintText,
@@ -41,7 +43,9 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText=false,
     this.obscuringCharacter='.',
     this.keyboardType,
-    this.errorStyle
+    this.errorStyle,
+    this.verticalPadding = 16,
+    this.horizontalPadding = 15
   });
 
   @override
@@ -59,6 +63,10 @@ class CustomTextFormField extends StatelessWidget {
       cursorColor: AppColors.primaryColor,
       cursorHeight: 20.h,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+            vertical: verticalPadding.h,
+            horizontal: horizontalPadding.w
+        ),
         filled: filled,
         fillColor: fillColor,
         errorMaxLines: 2,

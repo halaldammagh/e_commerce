@@ -2,9 +2,11 @@ import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/domain/entities/response/product/product.dart';
+import 'package:e_commerce/features/ui/pages/%20cart_screen/cubit/cart_screen_view_model.dart';
 import 'package:e_commerce/features/widgets/custom_elevated_button.dart';
 import 'package:e_commerce/features/widgets/product_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:readmore/readmore.dart';
 
@@ -17,22 +19,26 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int productCounter = 0;
-  double totalPrice = 0.0;
+  late Product args;
+
+  // ✅ السعر الحقيقي بيتحسب تلقائياً
+  double get totalPrice => productCounter * (args.price?.toDouble() ?? 0);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    args = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as Product;
+  }
+
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments as Product;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          (args.title ?? '')
-              .trim()
-              .split(RegExp(r'\s+'))
-              .take(2)
-              .join(' '),
+          (args.title ?? '').trim().split(RegExp(r'\s+')).take(2).join(' '),
           style: AppStyles.semi20Primary,
         ),
         centerTitle: true,
@@ -54,24 +60,25 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-            left: 16.w, right: 16.w, top: 16.h, bottom: 24.h,),
+              left: 16.w, right: 16.w, top: 16.h, bottom: 24.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProductSlider(product: args),
-              SizedBox(height: 16.h,),
+              SizedBox(height: 16.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text(args.title ?? "",
-                      style: AppStyles.medium18Header,),
+                    child: Text(args.title ?? '',
+                        style: AppStyles.medium18PrimaryHeader),
                   ),
-                  SizedBox(width: 15.w,),
-                  Text('EGP ${args.price}', style: AppStyles.medium18Header,)
+                  SizedBox(width: 15.w),
+                  Text('EGP ${args.price}',
+                      style: AppStyles.medium18PrimaryHeader),
                 ],
               ),
-              SizedBox(height: 16.h,),
+              SizedBox(height: 16.h),
               Row(
                 children: [
                   Container(
@@ -79,26 +86,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: AppColors.primaryColor.withOpacity(0.3),
-                          width: 1
-                      ),
+                          width: 1),
                       borderRadius: BorderRadius.circular(20.r),
-
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 16.w,
-                        vertical: 8.h),
-                    child: Text("${args.sold} Sold",
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w, vertical: 8.h),
+                    child: Text(
+                      '${args.sold} Sold',
                       overflow: TextOverflow.ellipsis,
                       style: AppStyles.medium14PrimaryDark,
                     ),
                   ),
-                  SizedBox(width: 16.w,),
-                  Image.asset(AppAssets.starIcon, width: 20.w,),
-                  SizedBox(width: 4.w,),
-                  Expanded(child: Text(
-                    "${args.ratingsAverage} (${args.ratingsQuantity})",
-                    style: AppStyles.medium14PrimaryDark,
-                    overflow: TextOverflow.ellipsis,
-                  )),
+                  SizedBox(width: 16.w),
+                  Image.asset(AppAssets.starIcon, width: 20.w),
+                  SizedBox(width: 4.w),
+                  Expanded(
+                    child: Text(
+                      '${args.ratingsAverage} (${args.ratingsQuantity})',
+                      style: AppStyles.medium14PrimaryDark,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  // ✅ counter بدون setState وبسعر حقيقي
                   Container(
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
@@ -107,50 +116,36 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Row(
                       spacing: 14.w,
                       children: [
-
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
                             onTap: () {
-                              if (productCounter != 0) {
-                                productCounter--;
-                                //todo: get unit price first
-                                //assuming unit prise is 500
-                                totalPrice -= 500;
-                                setState(() {
-
-                                });
+                              if (productCounter > 0) {
+                                setState(() => productCounter--);
                               }
                             },
                             child: Image.asset(AppAssets.removeIcon),
                           ),
                         ),
-                        Text(
-                          '$productCounter', style: AppStyles.regular18White,),
+                        Text('$productCounter',
+                            style: AppStyles.regular18White),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
                             onTap: () {
-                              productCounter++;
-                              //todo: get unit price first
-                              //assuming unit prise is 500
-                              totalPrice += 500;
-                              setState(() {
-
-                              });
+                              setState(() => productCounter++);
                             },
                             child: Image.asset(AppAssets.addIcon),
                           ),
-                        )
+                        ),
                       ],
                     ),
-
-                  )
+                  ),
                 ],
               ),
-              SizedBox(height: 8.h,),
-              Text('Description', style: AppStyles.medium18Header),
-              SizedBox(height: 8.h,),
+              SizedBox(height: 8.h),
+              Text('Description', style: AppStyles.medium18PrimaryHeader),
+              SizedBox(height: 8.h),
               ReadMoreText(
                 args.description ?? '',
                 style: AppStyles.medium14LightPrimary,
@@ -160,26 +155,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 trimMode: TrimMode.Line,
                 colorClickableText: AppColors.primaryColor,
               ),
-              SizedBox(height: 26.h,),
-              _buildPriceSection()
+              SizedBox(height: 26.h),
+              _buildPriceSection(
+                totalPrice: totalPrice,
+                onPressed: () {
+                  if (productCounter == 0) return; // ✅ ما تضيفي 0 items
+                  context
+                      .read<CartScreenViewModel>()
+                      .addProductToCart(args.id ?? '');
+                },
+              ),
             ],
           ),
         ),
       ),
-
     );
   }
 
-  Widget _buildPriceSection() {
+  Widget _buildPriceSection(
+      {required VoidCallback onPressed, required double totalPrice}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Total price', style: AppStyles.medium18LightHeader,),
-            Text('EGP ${totalPrice}', style: AppStyles.medium18Header,)
-
+            Text('Total price', style: AppStyles.medium18LightHeader),
+            Text('EGP $totalPrice', style: AppStyles.medium18PrimaryHeader),
           ],
         ),
         Padding(
@@ -187,24 +189,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           child: CustomElevatedButton(
             child: Row(
               children: [
-
                 Padding(
                   padding: EdgeInsets.only(left: 32),
                   child: Image.asset(AppAssets.addToCartIcon),
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 79, left: 24),
-                  child: Text('Add to cart', style: AppStyles.regular18White,),
-                )
-              ],),
+                  child:
+                  Text('Add to cart', style: AppStyles.regular18White),
+                ),
+              ],
+            ),
             decorationColor: AppColors.primaryColor,
-            onPressed: () {},
+            onPressed: onPressed,
             borderRadius: 45.r,
-
           ),
-        )
-
-
+        ),
       ],
     );
   }

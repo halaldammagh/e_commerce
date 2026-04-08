@@ -40,7 +40,6 @@ class _HomeTabState extends State<HomeTab> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 156.h),
             _buildAnnouncement(
               images: [AppAssets.Banner1, AppAssets.Banner2, AppAssets.Banner3],
             ),
@@ -150,7 +149,7 @@ class _HomeTabState extends State<HomeTab> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(name, style: AppStyles.medium18Header),
+        Text(name, style: AppStyles.medium18PrimaryHeader),
         TextButton(
           onPressed: () {},
           child: Text('View all', style: AppStyles.regular12Text),

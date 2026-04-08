@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:e_commerce/core/cache/shared_prefs_utils.dart';
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
 
 class DioInterceptors extends Interceptor {
@@ -25,6 +26,14 @@ class DioInterceptors extends Interceptor {
         break;
 
       case DioExceptionType.badResponse:
+        // ✅ معالجة التوكن المنتهي
+        if (err.response?.statusCode == 401) {
+          SharedPrefsUtils.removeData(key: 'token');
+          exception = UnAuthorizedException(
+            message: 'Session expired, please login again',
+          );
+          break;
+        }
         exception = ServerException(
           message: message,
           statusCode: err.response?.statusCode,

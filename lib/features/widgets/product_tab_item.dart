@@ -4,16 +4,24 @@ import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/domain/entities/response/product/product.dart';
+import 'package:e_commerce/features/ui/pages/%20cart_screen/cubit/cart_screen_view_model.dart';
+import 'package:e_commerce/features/ui/pages/home_screens/tabs/favorite_tab/cubit/favorite_tab_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../ui/pages/home_screens/tabs/favorite_tab/cubit/favorite_screen_status.dart';
 
 class ProductTabItem extends StatelessWidget {
   final Product product;
+  bool isSelected = false;
 
-  const ProductTabItem({super.key, required this.product});
+  ProductTabItem({super.key, required this.product});
+
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
@@ -39,14 +47,28 @@ class ProductTabItem extends StatelessWidget {
                       const Icon(Icons.error, color: AppColors.redColor),
                 ),
               ),
-              Positioned(
-                top: 2.h,
-                right: 2.w,
-                child: InkWell(
-                  onTap: () {},
-                  child: Image.asset(AppAssets.unSelectedAddToFavouriteIcon),
-                ),
-              ),
+              BlocBuilder<FavoriteTabViewModel, FavoriteScreenStatus>(
+                builder: (context, state) {
+                  final viewModel = context.read<FavoriteTabViewModel>();
+
+                  final isFav = viewModel.isFavourite(product.id ?? '');
+
+                  return Positioned(
+                    top: 2.h,
+                    right: 2.w,
+                    child: InkWell(
+                      onTap: () {
+                        viewModel.addProductToFavorite(product.id ?? '');
+                      },
+                      child: Image.asset(
+                        isFav
+                            ? AppAssets.selectedAddToFavouriteIcon
+                            : AppAssets.unSelectedAddToFavouriteIcon,
+                      ),
+                    ),
+                  );
+                },
+              )
             ],
           ),
 
@@ -105,6 +127,8 @@ class ProductTabItem extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         //todo: add to cart
+                        CartScreenViewModel.get(context).addProductToCart(
+                            product.id ?? '');
                       },
                       splashColor: AppColors.transParentColor,
                       child: Image.asset(AppAssets.plusIcon),
