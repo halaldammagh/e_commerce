@@ -1,4 +1,5 @@
 
+
 class LoginRequest {
   final String? email;
   final String? password;
@@ -8,6 +9,13 @@ class LoginRequest {
     this.password,
   });
 
+
+// LoginRequestDto toLoginRequestDto(){
+//   return LoginRequestDto(
+//     email: email,
+//     password: password
+//   );
 }
+
 
 

@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
-    primaryColor: AppColors.primaryColor,
+      useMaterial3: false,
+      // الحل الأسرع
+
+      primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.whiteColor,
     appBarTheme: const AppBarTheme(
+
       backgroundColor: AppColors.whiteColor,
       elevation: 0,
       iconTheme: IconThemeData(
@@ -14,9 +18,9 @@ class AppTheme {
     ),
 
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+
       showUnselectedLabels: false,
       showSelectedLabels: false,
-     // elevation:
     )
   );
 }
