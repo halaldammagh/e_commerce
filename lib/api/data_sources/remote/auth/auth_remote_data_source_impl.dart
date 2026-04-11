@@ -21,9 +21,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     var authResponse = await _apiServices.login(
       loginRequest.toLoginRequestDto(),
     );
+
     //todo: save token
     SharedPrefsUtils.saveData(key: 'token', value: authResponse.token ?? "");
-
+    print('EMAIL FROM API: ${authResponse.user?.email}');
+    await SharedPrefsUtils.saveData(
+      key: 'email',
+      value: authResponse.user?.email ?? "",
+    );
+    print('EMAIL SAVED: ${SharedPrefsUtils.getData(key: 'email')}');
     //todo: AuthResponseDto => AuthResponse
     return authResponse.toAuthResponse();
   }

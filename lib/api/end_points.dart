@@ -10,4 +10,5 @@ class EndPoints {
   static const String deleteWishlistApi = 'wishlist/{productId}';
   static const String putCartApi = 'cart/{productId}';
   static const String wishlistApi = 'wishlist';
+  static const String verifyApi = 'auth/verifyToken';
 }

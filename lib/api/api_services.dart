@@ -10,6 +10,7 @@ import 'package:e_commerce/api/model/response/cart/add/add_product_cart_response
 import 'package:e_commerce/api/model/response/cart/get/get_cart_response_dto.dart';
 import 'package:e_commerce/api/model/response/category_brand/category_or_brand_response_dto.dart';
 import 'package:e_commerce/api/model/response/product/product_response_dto.dart';
+import 'package:e_commerce/api/model/response/verify/verify_response_dto.dart';
 import 'package:e_commerce/api/model/response/wishlist/add/add_wishlist_response_dto.dart';
 import 'package:e_commerce/api/model/response/wishlist/delete/delete_wishlist_response_dto.dart';
 import 'package:e_commerce/api/model/response/wishlist/get/get_wishlist_response_dto.dart';
@@ -73,4 +74,9 @@ abstract class ApiServices {
   Future<DeleteWishlistResponseDto> deleteItemInWishlist(
       @Path('productId') String productId,
       @Header('token') String token);
+
+
+  @GET(EndPoints.verifyApi)
+  Future<VerifyResponseDto> getUser(@Header('token') String token);
+
 }

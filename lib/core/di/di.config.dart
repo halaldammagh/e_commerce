@@ -23,6 +23,8 @@ import 'package:e_commerce/api/data_sources/remote/category/category_remote_data
     as _i1053;
 import 'package:e_commerce/api/data_sources/remote/product/product_remote_data_source_impl.dart'
     as _i507;
+import 'package:e_commerce/api/data_sources/remote/verify/verify_remote_data_source_impl.dart'
+    as _i713;
 import 'package:e_commerce/api/data_sources/remote/wishlist/wishlist_remote_data_source_impl.dart'
     as _i770;
 import 'package:e_commerce/api/dio/get_it_%20module.dart' as _i895;
@@ -38,6 +40,8 @@ import 'package:e_commerce/data/data_sources/remote/category/category_remote_dat
     as _i888;
 import 'package:e_commerce/data/data_sources/remote/product/product_remote_data_source.dart'
     as _i673;
+import 'package:e_commerce/data/data_sources/remote/verify/verify_remote_data_source.dart'
+    as _i163;
 import 'package:e_commerce/data/data_sources/remote/wishlist/wishlist_remote_data_source.dart'
     as _i443;
 import 'package:e_commerce/data/repository/auth/auth_repository_impl.dart'
@@ -52,6 +56,8 @@ import 'package:e_commerce/data/repository/category/category_repository_impl.dar
     as _i534;
 import 'package:e_commerce/data/repository/product/product_repository_impl.dart'
     as _i361;
+import 'package:e_commerce/data/repository/verify/verify_repository_impl.dart'
+    as _i301;
 import 'package:e_commerce/data/repository/wishlist/wishlist_repository_impl.dart'
     as _i752;
 import 'package:e_commerce/domain/repository/auth/auth_repository.dart'
@@ -66,6 +72,8 @@ import 'package:e_commerce/domain/repository/category/category_repository.dart'
     as _i464;
 import 'package:e_commerce/domain/repository/product/product_repository.dart'
     as _i426;
+import 'package:e_commerce/domain/repository/verify/verify_repository.dart'
+    as _i535;
 import 'package:e_commerce/domain/repository/wishlist/wishlist_repository.dart'
     as _i744;
 import 'package:e_commerce/domain/use_cases/add_product_to_wishlist_use_case.dart'
@@ -84,6 +92,8 @@ import 'package:e_commerce/domain/use_cases/get_all_products_use_case.dart'
 import 'package:e_commerce/domain/use_cases/get_cart_use_case.dart' as _i786;
 import 'package:e_commerce/domain/use_cases/get_products_in_wishlist_use_case.dart'
     as _i900;
+import 'package:e_commerce/domain/use_cases/get_user_token_use_case.dart'
+    as _i172;
 import 'package:e_commerce/domain/use_cases/login_use_case.dart' as _i186;
 import 'package:e_commerce/domain/use_cases/register_use_case.dart' as _i883;
 import 'package:e_commerce/domain/use_cases/update_count_in_cart_use_case.dart'
@@ -102,6 +112,8 @@ import 'package:e_commerce/features/ui/pages/home_screens/tabs/home_tab/cubit/ho
     as _i374;
 import 'package:e_commerce/features/ui/pages/home_screens/tabs/products_tab/cubit/product_tab_view_model.dart'
     as _i230;
+import 'package:e_commerce/features/ui/pages/home_screens/tabs/user_tab/cubit/user_tab_view_model.dart'
+    as _i77;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/src/pretty_dio_logger.dart' as _i59;
@@ -138,6 +150,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i895.CartRemoteDataSource>(
       () => _i69.CartRemoteDataSourceImpl(gh<_i657.ApiServices>()),
+    );
+    gh.factory<_i163.VerifyRemoteDataSource>(
+      () => _i713.VerifyRemoteDataSourceImpl(gh<_i657.ApiServices>()),
     );
     gh.factory<_i673.ProductRemoteDataSource>(
       () => _i507.ProductRemoteDataSourceImpl(gh<_i657.ApiServices>()),
@@ -180,6 +195,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i464.CategoryRepository>(
       () => _i534.CategoryRepositoryImpl(gh<_i888.CategoryRemoteDataSource>()),
     );
+    gh.factory<_i535.VerifyRepository>(
+      () => _i301.VerifyRepositoryImpl(gh<_i163.VerifyRemoteDataSource>()),
+    );
     gh.factory<_i426.ProductRepository>(
       () => _i361.ProductRepositoryImpl(gh<_i673.ProductRemoteDataSource>()),
     );
@@ -211,6 +229,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i786.GetCartUseCase>(
       () => _i786.GetCartUseCase(gh<_i214.GetCartRepository>()),
     );
+    gh.factory<_i172.GetUserTokenUseCase>(
+      () => _i172.GetUserTokenUseCase(gh<_i535.VerifyRepository>()),
+    );
     gh.factory<_i186.LoginUseCase>(
       () => _i186.LoginUseCase(gh<_i491.AuthRepository>()),
     );
@@ -230,6 +251,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i451.RegisterViewModel>(
       () => _i451.RegisterViewModel(gh<_i883.RegisterUseCase>()),
+    );
+    gh.factory<_i77.UserTabViewModel>(
+      () => _i77.UserTabViewModel(gh<_i172.GetUserTokenUseCase>()),
     );
     gh.factory<_i955.LoginViewModel>(
       () => _i955.LoginViewModel(gh<_i186.LoginUseCase>()),

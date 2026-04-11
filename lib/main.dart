@@ -14,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'features/ui/pages/home_screens/tabs/favorite_tab/cubit/favorite_tab_view_model.dart';
+import 'features/ui/pages/home_screens/tabs/user_tab/cubit/user_tab_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,10 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => getIt<CartScreenViewModel>(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => getIt<UserTabViewModel>(),
+        ),
       ],
       child: MyApp(routeName: routeName,)));
 
